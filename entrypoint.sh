@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # expect music passed in from mount, fail otherwise (mount not available?)
-[[ "$(ls -A /var/lib/mpd/music)" ]] ||  exit
+[ ! -d "/var/lib/mpd/music" ] && exit
 
 # fix permissions
 chown -R mpd:audio /var/lib/mpd
