@@ -1,11 +1,11 @@
 #!/bin/sh
 
-## expect music passed in from mount, fail otherwise (mount not available?)
-[[ "$(ls -A /mpd/music)" ]] ||  exit
+# expect music passed in from mount, fail otherwise (mount not available?)
+[[ "$(ls -A /var/lib/mpd/music)" ]] ||  exit
 
-touch /mpd/cache/{tag_cache,state,sticker.sql} \
-  && chmod -R 0777 /mpd/cache \
-  && chown -R mpd /mpd/cache
+# fix permissions
+chown -R mpd:audio /var/lib/mpd
+chown -R mpd:audio /run/mpd/
 
-## start
-exec mpd --no-daemon --stdout --verbose /etc/mpd.conf "$@"
+# start mpd
+exec mpd --no-daemon --stdout --verbose /var/lib/mpd/mpd.conf "$@"
