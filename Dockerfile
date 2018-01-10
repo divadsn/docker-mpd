@@ -11,17 +11,18 @@ RUN set -ex && \
     # Stop systemd service and setup directories
     service mpd stop && \
     mkdir -p \
+        /run/mpd \
         /var/lib/mpd/music \
         /var/lib/mpd/playlists && \
-    touch /var/lib/mpd/{tag_cache,state,sticker.sql} && \
+    chown -R mpd:audio /run/mpd && \
     # Clean-up
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache
 
-USER mpd
-
 VOLUME ["/var/lib/mpd/"]
 COPY mpd.conf /var/lib/mpd/mpd.conf
+
+EXPOSE 6600 8000
 
 COPY entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
