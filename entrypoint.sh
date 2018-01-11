@@ -13,4 +13,4 @@ touch \
 chown -R mpd:audio /var/lib/mpd
 
 # start mpd
-exec mpd --no-daemon --stdout --verbose /var/lib/mpd/mpd.conf "$@"
+exec mpd --no-daemon --stdout /var/lib/mpd/mpd.conf "$@"
